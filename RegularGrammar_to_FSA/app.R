@@ -1,32 +1,22 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+# Raúl Antonio Castillejos Santillán A01174919@tec.mx
+# Davide Dunne Sanchez A01642355@tec.mx
 
 library(shiny)
 library(igraph)
 library(shinydashboard)
 
-
-
-
-
 ui <- dashboardPage(
     dashboardHeader(title = "Proyecto 3 "),
     dashboardSidebar(
-      menuItem("Convertidor de grámatica", tabName = "convertidor", icon = icon("th")),
-      menuItem("Verificador de automata finito determinista", tabName = "verificador", icon = icon("th"))
+      menuItem("Convertidor", tabName = "convertidor", icon = icon("bolt")),
+      menuItem("Verificador", tabName = "verificador", icon = icon("dashboard"))
     ),
     dashboardBody(
       tabItems(
         # First tab content
         tabItem(tabName = "convertidor",
                 box(
-                  textInput("Texto", "Automata a plotear", ""),
+                  textAreaInput("text", "Automata a plotear", rows=10),
                   verbatimTextOutput("value")
                 )
                 ),
@@ -35,7 +25,7 @@ ui <- dashboardPage(
         # Second tab content
         tabItem(tabName = "verificador",
                 box(
-                  textInput("Texto", "Automata a verificar", ""),
+                  textAreaInput("text", "Automata a verificar", rows=10),
                   verbatimTextOutput("value")
                 )
                 )
@@ -44,7 +34,7 @@ ui <- dashboardPage(
   )
     
 server <- function(input, output) {
-  output$value <- renderText({ input$Texto })
+  output$value <- renderText({ input$text })
   
 }
 shinyApp(ui, server)
