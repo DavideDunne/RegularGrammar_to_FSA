@@ -17,7 +17,8 @@ ui <- dashboardPage(
         tabItem(tabName = "convertidor",
                 box(
                   textAreaInput("text.convert", "Automata a plotear", rows=10),
-                  verbatimTextOutput("value.convert")
+                  verbatimTextOutput("value.convert"),
+                  verbatimTextOutput("convert.class")
                 )
                 ),
         
@@ -26,7 +27,8 @@ ui <- dashboardPage(
         tabItem(tabName = "verificador",
                 box(
                   textAreaInput("text.verify", "Automata a verificar", rows=10),
-                  verbatimTextOutput("value.verify")
+                  verbatimTextOutput("value.verify"),
+                  verbatimTextOutput("verify.class")
                 )
                 )
       )
@@ -36,6 +38,8 @@ ui <- dashboardPage(
 server <- function(input, output) {
   output$value.convert <- renderText({ input$text.convert })
   output$value.verify <- renderText({ input$text.verify })
+  output$convert.class <- renderText({ class(input$text.convert) })
+  output$verify.class <- renderText({ class(input$text.verify) }) 
   
 }
 shinyApp(ui, server)
