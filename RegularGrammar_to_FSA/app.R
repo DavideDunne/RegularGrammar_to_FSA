@@ -4,6 +4,7 @@
 library(shiny)
 library(igraph)
 library(shinydashboard)
+source("functions.R")
 
 ui <- dashboardPage(
     dashboardHeader(title = "Proyecto 3 "),
