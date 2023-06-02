@@ -1,4 +1,4 @@
-build.nodes -> function(tran) {
+build.nodes <- function(tran) {
   nodes <- c()
   edges <- c()
   
@@ -25,3 +25,4 @@ build.nodes -> function(tran) {
   list.column <- list(nodes = nodes, edges = edges, type.node = type.node)
   return(list.column)
 }
+
