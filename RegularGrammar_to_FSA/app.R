@@ -17,6 +17,7 @@ ui <- dashboardPage(
         # First tab content
         tabItem(tabName = "convertidor",
                 box(
+                  width = 12,
                   textAreaInput("text.convert", "Automata a plotear", rows=10, value = "S->aB\nS->bA\nB->bA\nB->cA\nB->a"),
                   verbatimTextOutput("value.convert"),
                   verbatimTextOutput("convert.class"),
@@ -28,6 +29,7 @@ ui <- dashboardPage(
         # Second tab content
         tabItem(tabName = "verificador",
                 box(
+                  width = 12,
                   textAreaInput("text.verify", "Automata a verificar", rows=10),
                   verbatimTextOutput("value.verify"),
                   verbatimTextOutput("verify.class")
