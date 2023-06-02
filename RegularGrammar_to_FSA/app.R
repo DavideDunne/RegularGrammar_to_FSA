@@ -1,10 +1,10 @@
 # Raúl Antonio Castillejos Santillán A01174919@tec.mx
 # Davide Dunne Sanchez A01642355@tec.mx
 
+source("functions.R")
 library(shiny)
 library(igraph)
 library(shinydashboard)
-source("functions.R")
 
 ui <- dashboardPage(
     dashboardHeader(title = "Proyecto 3 "),
@@ -17,9 +17,10 @@ ui <- dashboardPage(
         # First tab content
         tabItem(tabName = "convertidor",
                 box(
-                  textAreaInput("text.convert", "Automata a plotear", rows=10),
+                  textAreaInput("text.convert", "Automata a plotear", rows=10, value = "S->aB\nS->bA\nB->bA\nB->cA\nB->a"),
                   verbatimTextOutput("value.convert"),
-                  verbatimTextOutput("convert.class")
+                  verbatimTextOutput("convert.class"),
+                  plotOutput("RegGram.plot")
                 )
                 ),
         
@@ -35,6 +36,8 @@ ui <- dashboardPage(
       )
       )
   )
+
+
     
 server <- function(input, output) {
   output$value.convert <- renderText({ input$text.convert })
@@ -42,7 +45,36 @@ server <- function(input, output) {
   output$convert.class <- renderText({ class(input$text.convert) })
   output$verify.class <- renderText({ class(input$text.verify) }) 
   
+  output$RegGram.plot <- renderPlot({
+    tran <- strsplit(input$text.convert, "\n")[[1]]
+    l <- length(tran)
+    
+    #At least one Regular Grammar statement
+    if(l>0){
+      graph.data <- build.nodes(tran)
+      g <- graph(graph.data$nodes, directed = TRUE)
+      layout <- layout_with_fr(g)
+      mapping.colors <- c("white","green","red")
+      node.colors <- mapping.colors[graph.data$type.node]
+      set.seed(42)
+      curves <- curve_multiple(g)
+      # Plot DFA graph
+      plot(g,
+           edge.label = graph.data$edges,
+           vertex.color = node.colors,
+           vertex.frame.color = "black",
+           vertex.label.color = "black",
+           edge.arrow.size = .5,
+           edge.curved = curves,
+           layout = layout
+      )
+    } else {
+      g.e <- make_empty_graph()
+      plot(g.e)
+    }
+  })
 }
+
 shinyApp(ui, server)
 
 
